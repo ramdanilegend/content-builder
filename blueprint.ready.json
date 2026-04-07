@@ -1,0 +1,411 @@
+{
+  "meta": {
+    "title": "Python Tips for Beginners",
+    "ratio": "9:16",
+    "resolution": "1080x1920",
+    "fps": 30
+  },
+
+  "defaults": {
+    "duration": {
+      "mode": "auto",
+      "fallback_ms": 3000,
+      "end_delay_ms": 400
+    },
+    "position": {
+      "unit": "percent",
+      "anchor": "center"
+    },
+    "voice": {
+      "provider": "edge_tts",
+      "voice": "en-US-GuyNeural",
+      "speed": 0.95,
+      "pitch": 1.0
+    },
+    "subtitle": {
+      "enabled": true,
+      "mode": "burn",
+      "source": "voice",
+      "style": {
+        "font_size": 52,
+        "color": "#FFFFFF",
+        "stroke_color": "#000000",
+        "stroke_width": 3
+      },
+      "position": {
+        "x": 50,
+        "y": 82,
+        "anchor": "bottom-center"
+      }
+    }
+  },
+
+  "assets": {
+    "images": {
+      "bg_intro":  "assets/images/bg_intro.png",
+      "bg_tip1":   "assets/images/bg_tip1.png",
+      "bg_tip2":   "assets/images/bg_tip2.png",
+      "bg_tip3":   "assets/images/bg_tip3.png",
+      "bg_outro":  "assets/images/bg_outro.png",
+      "logo":      "assets/images/logo.png"
+    },
+    "audio": {
+      "bgm": "assets/audio/bgm.wav"
+    }
+  },
+
+  "scenes": [
+
+    {
+      "id": "intro",
+      "type": "intro",
+
+      "duration": { "mode": "auto" },
+
+      "effects": [
+        { "type": "fade_in", "duration_ms": 700 }
+      ],
+
+      "layers": [
+        {
+          "type": "image",
+          "src": "bg_intro",
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "3 Python Tips",
+          "style": "title_center",
+          "position": { "x": 50, "y": 35, "anchor": "center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "Every Beginner Must Know",
+          "style": {
+            "font_size": 44,
+            "color": "#FFD700",
+            "stroke_color": "#000000",
+            "stroke_width": 3,
+            "max_width_pct": 80
+          },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 3
+        },
+        {
+          "type": "image",
+          "src": "logo",
+          "size": { "width": 15 },
+          "position": { "x": 88, "y": 6, "anchor": "top-right" },
+          "z_index": 4
+        }
+      ],
+
+      "audio": {
+        "voice": {
+          "text": "Here are three Python tips that every beginner must know to write cleaner and faster code.",
+          "voice": "en-US-GuyNeural"
+        },
+        "bgm": {
+          "src": "bgm",
+          "volume": 0.25,
+          "loop": true
+        }
+      },
+
+      "subtitle": {
+        "enabled": true,
+        "granularity": "sentence"
+      }
+    },
+
+    {
+      "id": "tip_1",
+      "type": "main",
+
+      "duration": { "mode": "auto" },
+
+      "effects": [
+        { "type": "fade", "duration_ms": 400 }
+      ],
+
+      "layers": [
+        {
+          "type": "image",
+          "src": "bg_tip1",
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "Tip #1",
+          "style": {
+            "font_size": 80,
+            "color": "#FF4444",
+            "stroke_color": "#FFFFFF",
+            "stroke_width": 4,
+            "max_width_pct": 50
+          },
+          "position": { "x": 50, "y": 18, "anchor": "top-center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "List Comprehensions",
+          "style": "title_center",
+          "position": { "x": 50, "y": 32, "anchor": "top-center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "[x*2 for x in range(10)]",
+          "style": {
+            "font_size": 38,
+            "color": "#00FF88",
+            "stroke_color": "#000000",
+            "stroke_width": 2,
+            "max_width_pct": 85
+          },
+          "position": { "x": 50, "y": 48, "anchor": "center" },
+          "z_index": 3
+        }
+      ],
+
+      "audio": {
+        "voice": {
+          "text": "Tip number one — use list comprehensions. Instead of writing a for loop to build a list, you can do it in a single line. It is faster and much more readable.",
+          "voice": "en-US-JennyNeural"
+        },
+        "bgm": {
+          "src": "bgm",
+          "volume": 0.15,
+          "loop": true
+        }
+      },
+
+      "subtitle": {
+        "enabled": true,
+        "granularity": "word",
+        "highlight": {
+          "enabled": true,
+          "color": "#FFD700"
+        }
+      }
+    },
+
+    {
+      "id": "tip_2",
+      "type": "main",
+
+      "duration": { "mode": "auto" },
+
+      "effects": [
+        { "type": "fade", "duration_ms": 400 }
+      ],
+
+      "layers": [
+        {
+          "type": "image",
+          "src": "bg_tip2",
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "Tip #2",
+          "style": {
+            "font_size": 80,
+            "color": "#FF4444",
+            "stroke_color": "#FFFFFF",
+            "stroke_width": 4,
+            "max_width_pct": 50
+          },
+          "position": { "x": 50, "y": 18, "anchor": "top-center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "f-Strings",
+          "style": "title_center",
+          "position": { "x": 50, "y": 32, "anchor": "top-center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "f\"Hello, {name}!\"",
+          "style": {
+            "font_size": 38,
+            "color": "#00FF88",
+            "stroke_color": "#000000",
+            "stroke_width": 2,
+            "max_width_pct": 85
+          },
+          "position": { "x": 50, "y": 48, "anchor": "center" },
+          "z_index": 3
+        }
+      ],
+
+      "audio": {
+        "voice": {
+          "text": "Tip number two — f-strings. Stop using string concatenation or the format method. With f-strings, you just put an f before the quote and embed variables directly inside curly braces.",
+          "voice": "en-US-GuyNeural"
+        },
+        "bgm": {
+          "src": "bgm",
+          "volume": 0.15,
+          "loop": true
+        }
+      },
+
+      "subtitle": {
+        "enabled": true,
+        "granularity": "word",
+        "highlight": {
+          "enabled": true,
+          "color": "#87CEEB"
+        }
+      }
+    },
+
+    {
+      "id": "tip_3",
+      "type": "main",
+
+      "duration": { "mode": "auto" },
+
+      "effects": [
+        { "type": "fade", "duration_ms": 400 }
+      ],
+
+      "layers": [
+        {
+          "type": "image",
+          "src": "bg_tip3",
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "Tip #3",
+          "style": {
+            "font_size": 80,
+            "color": "#FF4444",
+            "stroke_color": "#FFFFFF",
+            "stroke_width": 4,
+            "max_width_pct": 50
+          },
+          "position": { "x": 50, "y": 18, "anchor": "top-center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "enumerate()",
+          "style": "title_center",
+          "position": { "x": 50, "y": 32, "anchor": "top-center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "for i, v in enumerate(items)",
+          "style": {
+            "font_size": 36,
+            "color": "#00FF88",
+            "stroke_color": "#000000",
+            "stroke_width": 2,
+            "max_width_pct": 88
+          },
+          "position": { "x": 50, "y": 48, "anchor": "center" },
+          "z_index": 3
+        }
+      ],
+
+      "audio": {
+        "voice": {
+          "text": "Tip number three — use enumerate. When you need both the index and the value in a loop, never use range of len. Use enumerate instead. It is cleaner and more Pythonic.",
+          "voice": "en-US-AriaNeural"
+        },
+        "bgm": {
+          "src": "bgm",
+          "volume": 0.15,
+          "loop": true
+        }
+      },
+
+      "subtitle": {
+        "enabled": true,
+        "granularity": "word",
+        "highlight": {
+          "enabled": true,
+          "color": "#FF69B4"
+        }
+      }
+    },
+
+    {
+      "id": "outro",
+      "type": "outro",
+
+      "duration": { "mode": "fixed", "ms": 4500 },
+
+      "effects": [
+        { "type": "fade_out", "duration_ms": 900 }
+      ],
+
+      "layers": [
+        {
+          "type": "image",
+          "src": "bg_outro",
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "Which tip did you know?",
+          "style": "title_center",
+          "position": { "x": 50, "y": 35, "anchor": "center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "Comment below!",
+          "style": "cta_center",
+          "position": { "x": 50, "y": 52, "anchor": "center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "Follow for more Python tips",
+          "style": "body",
+          "position": { "x": 50, "y": 90, "anchor": "bottom-center" },
+          "z_index": 3
+        },
+        {
+          "type": "image",
+          "src": "logo",
+          "size": { "width": 18 },
+          "position": { "x": 50, "y": 68, "anchor": "center" },
+          "z_index": 4
+        }
+      ],
+
+      "audio": {
+        "bgm": {
+          "src": "bgm",
+          "volume": 0.35,
+          "loop": false
+        }
+      },
+
+      "subtitle": {
+        "enabled": false
+      }
+    }
+
+  ]
+}

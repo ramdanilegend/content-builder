@@ -1,0 +1,403 @@
+{
+  "meta": {
+    "title": "Top 3 Travel Destinations",
+    "ratio": "9:16",
+    "resolution": "1080x1920",
+    "fps": 30
+  },
+
+  "defaults": {
+    "duration": {
+      "mode": "auto",
+      "fallback_ms": 3000,
+      "end_delay_ms": 400
+    },
+    "position": {
+      "unit": "percent",
+      "anchor": "center"
+    },
+    "voice": {
+      "provider": "edge_tts",
+      "voice": "en-US-GuyNeural",
+      "speed": 0.95,
+      "pitch": 1.0
+    },
+    "subtitle": {
+      "enabled": true,
+      "mode": "burn",
+      "source": "voice",
+      "style": {
+        "font_size": 52,
+        "color": "#FFFFFF",
+        "stroke_color": "#000000",
+        "stroke_width": 3,
+        "font_weight": "bold"
+      },
+      "position": {
+        "x": 50,
+        "y": 83,
+        "anchor": "bottom-center"
+      }
+    }
+  },
+
+  "assets": {
+    "images": {
+      "bali_bg":    "assets/images/bali.jpg",
+      "paris_bg":   "assets/images/paris.jpg",
+      "tokyo_bg":   "assets/images/tokyo.jpg",
+      "logo":       "assets/images/logo.png"
+    },
+    "videos": {
+      "bali_drone":  "assets/videos/bali_drone.mp4",
+      "tokyo_street":"assets/videos/tokyo_street.mp4"
+    },
+    "audio": {
+      "bgm_chill":  "assets/audio/chill_bgm.mp3",
+      "bgm_upbeat": "assets/audio/upbeat_bgm.mp3"
+    }
+  },
+
+  "scenes": [
+
+    {
+      "id": "intro",
+      "type": "intro",
+
+      "duration": {
+        "mode": "auto"
+      },
+
+      "effects": [
+        { "type": "fade_in", "duration_ms": 600 }
+      ],
+
+      "layers": [
+        {
+          "type": "image",
+          "src": "bali_bg",
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "Top 3 Travel Destinations",
+          "style": "title_center",
+          "position": { "x": 50, "y": 30, "anchor": "top-center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "You NEED to visit these in 2025",
+          "style": {
+            "font_size": 40,
+            "color": "#FFD700",
+            "stroke_color": "#000000",
+            "stroke_width": 3,
+            "max_width_pct": 75
+          },
+          "position": { "x": 50, "y": 55, "anchor": "center" },
+          "z_index": 3
+        },
+        {
+          "type": "image",
+          "src": "logo",
+          "size": { "width": 20 },
+          "position": { "x": 90, "y": 8, "anchor": "top-right" },
+          "z_index": 4
+        }
+      ],
+
+      "audio": {
+        "voice": {
+          "text": "Here are the top three travel destinations you absolutely need to visit in 2025.",
+          "voice": "en-US-GuyNeural"
+        },
+        "bgm": {
+          "src": "bgm_chill",
+          "volume": 0.3,
+          "loop": true
+        }
+      },
+
+      "subtitle": {
+        "enabled": true,
+        "granularity": "sentence"
+      }
+    },
+
+    {
+      "id": "destination_1_bali",
+      "type": "main",
+
+      "duration": {
+        "mode": "auto"
+      },
+
+      "effects": [
+        { "type": "fade", "duration_ms": 400 }
+      ],
+
+      "layers": [
+        {
+          "type": "video",
+          "src": "bali_drone",
+          "loop": true,
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "#1",
+          "style": {
+            "font_size": 100,
+            "color": "#FF4444",
+            "stroke_color": "#FFFFFF",
+            "stroke_width": 5,
+            "max_width_pct": 40
+          },
+          "position": { "x": 10, "y": 12, "anchor": "top-left" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "Bali, Indonesia",
+          "style": "title_center",
+          "position": { "x": 50, "y": 18, "anchor": "top-center" },
+          "z_index": 3
+        }
+      ],
+
+      "audio": {
+        "voice": {
+          "text": "Number one — Bali, Indonesia. With its stunning rice terraces, spiritual temples, and world-class surf spots, Bali is a paradise unlike any other.",
+          "voice": "en-US-JennyNeural"
+        },
+        "bgm": {
+          "src": "bgm_chill",
+          "volume": 0.2,
+          "loop": true
+        }
+      },
+
+      "subtitle": {
+        "enabled": true,
+        "granularity": "word",
+        "highlight": {
+          "enabled": true,
+          "color": "#FFD700"
+        },
+        "style": {
+          "font_size": 50,
+          "color": "#FFFFFF",
+          "stroke_color": "#000000",
+          "stroke_width": 3
+        },
+        "position": {
+          "x": 50,
+          "y": 80,
+          "anchor": "bottom-center"
+        }
+      }
+    },
+
+    {
+      "id": "destination_2_paris",
+      "type": "main",
+
+      "duration": {
+        "mode": "auto"
+      },
+
+      "effects": [
+        { "type": "fade", "duration_ms": 400 }
+      ],
+
+      "layers": [
+        {
+          "type": "image",
+          "src": "paris_bg",
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "#2",
+          "style": {
+            "font_size": 100,
+            "color": "#FF4444",
+            "stroke_color": "#FFFFFF",
+            "stroke_width": 5,
+            "max_width_pct": 40
+          },
+          "position": { "x": 10, "y": 12, "anchor": "top-left" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "Paris, France",
+          "style": "title_center",
+          "position": { "x": 50, "y": 18, "anchor": "top-center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "The City of Light",
+          "style": "body",
+          "position": { "x": 50, "y": 30, "anchor": "top-center" },
+          "z_index": 3
+        }
+      ],
+
+      "audio": {
+        "voice": {
+          "text": "Number two — Paris, France. The city of light offers iconic landmarks, world-renowned cuisine, and an unmatched cultural experience.",
+          "voice": "en-US-GuyNeural"
+        },
+        "bgm": {
+          "src": "bgm_chill",
+          "volume": 0.2,
+          "loop": true
+        }
+      },
+
+      "subtitle": {
+        "enabled": true,
+        "granularity": "word",
+        "highlight": {
+          "enabled": true,
+          "color": "#87CEEB"
+        }
+      }
+    },
+
+    {
+      "id": "destination_3_tokyo",
+      "type": "main",
+
+      "duration": {
+        "mode": "auto"
+      },
+
+      "effects": [
+        { "type": "fade", "duration_ms": 400 }
+      ],
+
+      "layers": [
+        {
+          "type": "video",
+          "src": "tokyo_street",
+          "loop": true,
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "#3",
+          "style": {
+            "font_size": 100,
+            "color": "#FF4444",
+            "stroke_color": "#FFFFFF",
+            "stroke_width": 5,
+            "max_width_pct": 40
+          },
+          "position": { "x": 10, "y": 12, "anchor": "top-left" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "Tokyo, Japan",
+          "style": "title_center",
+          "position": { "x": 50, "y": 18, "anchor": "top-center" },
+          "z_index": 3
+        }
+      ],
+
+      "audio": {
+        "voice": {
+          "text": "And number three — Tokyo, Japan. A city where ancient traditions meet futuristic technology, creating a travel experience you will never forget.",
+          "voice": "en-US-AriaNeural"
+        },
+        "bgm": {
+          "src": "bgm_upbeat",
+          "volume": 0.25,
+          "loop": true
+        }
+      },
+
+      "subtitle": {
+        "enabled": true,
+        "granularity": "word",
+        "highlight": {
+          "enabled": true,
+          "color": "#FF69B4"
+        },
+        "style": {
+          "font_size": 50
+        }
+      }
+    },
+
+    {
+      "id": "outro",
+      "type": "outro",
+
+      "duration": {
+        "mode": "fixed",
+        "ms": 4000
+      },
+
+      "effects": [
+        { "type": "fade_out", "duration_ms": 800 }
+      ],
+
+      "layers": [
+        {
+          "type": "image",
+          "src": "tokyo_bg",
+          "size": { "width": 100 },
+          "position": { "x": 50, "y": 50, "anchor": "center" },
+          "z_index": 1
+        },
+        {
+          "type": "text",
+          "content": "Which one would YOU visit?",
+          "style": "title_center",
+          "position": { "x": 50, "y": 35, "anchor": "center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "Comment below!",
+          "style": "cta_center",
+          "position": { "x": 50, "y": 55, "anchor": "center" },
+          "z_index": 3
+        },
+        {
+          "type": "text",
+          "content": "Follow for more travel tips",
+          "style": "body",
+          "position": { "x": 50, "y": 90, "anchor": "bottom-center" },
+          "z_index": 3
+        }
+      ],
+
+      "audio": {
+        "bgm": {
+          "src": "bgm_upbeat",
+          "volume": 0.4,
+          "loop": false
+        }
+      },
+
+      "subtitle": {
+        "enabled": false
+      }
+    }
+
+  ]
+}
