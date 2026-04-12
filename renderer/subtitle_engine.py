@@ -87,6 +87,9 @@ class SubtitleRenderer:
         self.color        = style.get("color",        "#FFFFFF")
         self.stroke_color = style.get("stroke_color", "#000000")
         self.stroke_width = int(style.get("stroke_width", 3))
+        self.max_width_pct = float(style.get("max_width_pct", 85))
+        self.font_family  = style.get("font_family", None)
+        self.font_weight  = style.get("font_weight", "bold")
 
         # position  (scene overrides defaults)
         pos_cfg          = {**def_sub.get("position", {}), **subtitle_config.get("position", {})}
@@ -94,10 +97,10 @@ class SubtitleRenderer:
         self.pos_y       = float(pos_cfg.get("y", 85))
         self.pos_anchor  = pos_cfg.get("anchor", "bottom-center")
 
-        # layout constants
-        self.font        = load_font(self.font_size)
+        # layout constants — use italic=False; bold determined by font_weight
+        self.font        = load_font(self.font_size, font_family=self.font_family)
         self.line_h      = self.font_size + 10
-        self.max_w_px    = int(self.canvas_w * 0.85)
+        self.max_w_px    = int(self.canvas_w * self.max_width_pct / 100.0)
 
         # all words in text
         self.words: List[str] = self.text.split()

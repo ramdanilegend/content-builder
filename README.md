@@ -29,7 +29,6 @@ A Python tool that generates videos from JSON blueprint configurations. Perfect 
    ```
 
    **Note:** You may also need FFmpeg installed on your system:
-
    - **macOS:** `brew install ffmpeg`
    - **Ubuntu/Debian:** `sudo apt-get install ffmpeg`
    - **Windows:** Download from https://ffmpeg.org/download.html
@@ -160,3 +159,10 @@ The project uses Edge TTS (free, no API key required). Check your internet conne
 ## License
 
 [Add your license information here]
+
+## Running Backend
+
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+
+Docker (recommended) → just rebuild: docker build -t content-builder . — the updated Dockerfile installs all font packages automatically via apt-get
+Local dev (no Docker) → run sudo python setup_fonts.py --install inside the content-builder folder

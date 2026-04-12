@@ -122,11 +122,14 @@ class SceneBuilder:
         voice_duration_ms: Optional[float] = None
         word_timings:     list           = []
 
-        audio_cfg  = scene.get("audio", {})
-        voice_cfg  = audio_cfg.get("voice", {})
-        voice_text = voice_cfg.get("text", "").strip()
+        audio_cfg    = scene.get("audio", {})
+        voice_cfg    = audio_cfg.get("voice", {})
+        voice_text   = voice_cfg.get("text", "").strip()
+        # render=true (default) → generate TTS audio; render=false → skip audio,
+        # subtitle text is still available for sentence-mode overlay.
+        voice_render = bool(voice_cfg.get("render", True))
 
-        if voice_text:
+        if voice_text and voice_render:
             def_voice   = self.defaults.get("voice", {})
             voice_name  = voice_cfg.get("voice",  def_voice.get("voice",  "en-US-GuyNeural"))
             voice_speed = float(def_voice.get("speed", 1.0))
@@ -145,6 +148,8 @@ class SceneBuilder:
                 )
             except Exception as exc:
                 logger.error(f"  TTS failed for scene '{sid}': {exc}")
+        elif voice_text and not voice_render:
+            logger.info(f"  ⏭  TTS skipped for scene '{sid}' (render=false)")
 
         # ── 2. BGM path + duration (for duration engine) ──────────────────────
         bgm_cfg           = audio_cfg.get("bgm", {})
