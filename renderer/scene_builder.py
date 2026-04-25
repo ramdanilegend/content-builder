@@ -19,8 +19,11 @@ import logging
 from pathlib import Path
 from typing import List, Optional, Tuple
 
+from moviepy.audio.AudioClip import concatenate_audioclips
 from moviepy.editor import (
+    AudioFileClip,
     ColorClip,
+    CompositeAudioClip,
     CompositeVideoClip,
     concatenate_videoclips,
 )
@@ -94,6 +97,9 @@ class SceneBuilder:
         logger.info(f"🎬  Concatenating {len(clips)} scene(s)…")
         final = concatenate_videoclips(clips, method="compose")
 
+        # ── Mix global audio tracks over the concatenated video ───────────────
+        final = self._mix_global_audio_tracks(final)
+
         logger.info(f"💾  Writing → {output_path}")
         final.write_videofile(
             output_path,
@@ -111,6 +117,95 @@ class SceneBuilder:
             except Exception:
                 pass
         final.close()
+
+    # ── global audio tracks ───────────────────────────────────────────────────
+
+    def _mix_global_audio_tracks(self, video):
+        """
+        Overlay blueprint.audio_tracks on top of the fully concatenated video.
+
+        Each entry looks like:
+            {
+              "id":          "...",
+              "src":         "<audio_asset_id>",
+              "start_ms":    3000,
+              "duration_ms": 15000,
+              "volume":      0.8,
+              "fade_in_ms":  0,
+              "fade_out_ms": 500
+            }
+        Assets have already been path-patched to absolute filesystem paths.
+        """
+        tracks = self.blueprint.get("audio_tracks", [])
+        if not tracks:
+            return video
+
+        audio_asset_map = self.assets.get("audio", {})
+        total_s         = video.duration
+        extra_clips     = []
+
+        for track in tracks:
+            src         = track.get("src", "")
+            audio_path  = audio_asset_map.get(src)
+
+            if not audio_path or not Path(audio_path).exists():
+                logger.warning(f"  ⚠️  Global audio track src='{src}' not found – skipped")
+                continue
+
+            start_ms    = float(track.get("start_ms",    0))
+            duration_ms = float(track.get("duration_ms", 0))
+            volume      = float(track.get("volume",      1.0))
+            fade_in_ms  = float(track.get("fade_in_ms",  0))
+            fade_out_ms = float(track.get("fade_out_ms", 0))
+
+            start_s    = start_ms    / 1000.0
+            duration_s = duration_ms / 1000.0
+
+            if start_s >= total_s:
+                logger.warning(f"  ⚠️  Global audio track '{src}' starts after video end – skipped")
+                continue
+
+            # Clamp to video end
+            actual_duration_s = min(duration_s, total_s - start_s) if duration_s > 0 else (total_s - start_s)
+
+            try:
+                clip = AudioFileClip(audio_path)
+
+                # Loop if necessary
+                if clip.duration < actual_duration_s:
+                    reps = int(actual_duration_s / clip.duration) + 2
+                    clip = concatenate_audioclips([clip] * reps)
+
+                clip = clip.subclip(0, min(clip.duration, actual_duration_s))
+                clip = clip.volumex(volume)
+
+                # Fade in
+                if fade_in_ms > 0:
+                    from moviepy.audio.fx.audio_fadein import audio_fadein
+                    clip = clip.fx(audio_fadein, fade_in_ms / 1000.0)
+
+                # Fade out
+                if fade_out_ms > 0:
+                    from moviepy.audio.fx.audio_fadeout import audio_fadeout
+                    clip = clip.fx(audio_fadeout, min(fade_out_ms / 1000.0, actual_duration_s / 2))
+
+                clip = clip.set_start(start_s)
+                extra_clips.append(clip)
+                logger.info(
+                    f"  🎵  Global audio: src={src} start={start_s:.2f}s "
+                    f"dur={actual_duration_s:.2f}s vol={volume}"
+                )
+            except Exception as exc:
+                logger.error(f"  ❌  Global audio track error (src={src}): {exc}")
+
+        if not extra_clips:
+            return video
+
+        # Compose original video audio + all global tracks
+        existing_audio = video.audio
+        all_audio_clips = ([existing_audio] if existing_audio is not None else []) + extra_clips
+        mixed_audio = CompositeAudioClip(all_audio_clips).set_duration(total_s)
+        return video.set_audio(mixed_audio)
 
     # ── scene ─────────────────────────────────────────────────────────────────
 

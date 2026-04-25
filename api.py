@@ -83,6 +83,9 @@ def _patch_asset_paths(blueprint: dict, work_dir: Path) -> dict:
           "videos": {"clip_id": "assets/videos/clip.mp4", ...},
           "audio":  {"bgm_id": "assets/audio/bgm.mp3", ...}
         }
+
+    Global audio tracks reference asset IDs (not paths); the renderer
+    resolves IDs via assets.audio — so we only need the assets map patched.
     """
     raw = blueprint.get("assets", {})
     for category in ("images", "videos", "audio"):
